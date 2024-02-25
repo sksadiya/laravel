@@ -33,25 +33,34 @@
         </div>
         @endif
 
-        <h1>ADD PRODUCTS</h1>
-        <form action="{{url('/add-product')}}" method="POST" enctype="multipart/form-data">
+        <h1>Update Products</h1>
+        <form action="{{url('update-product',$product->id)}}" method="POST" enctype="multipart/form-data">
             @csrf <!-- Include the CSRF token field -->
             <div class="col-md-8">
                 <div class="mb-3">
                     <label for="title" class="form-label">Product Title</label>
-                    <input type="text" class="form-control" name="title" required>
+                    <input type="text" class="form-control" name="title" value="{{$product->title}}" required>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="summernote" name="description" rows="3" required></textarea>
+                    <textarea class="form-control" id="summernote" name="description" rows="3"
+                        required>{{$product->description}}</textarea>
                 </div>
 
                 <div class="mb-3">
-                    <label for="image" class="form-label">Product Image</label>
-                    <input type="file" class="form-control" name="image" required>
+                    <label for="current-image" class="form-label">Current Image</label>
+                    @if ($product->image)
+                    <img src="{{ asset($product->image) }}" height="200px" width="200px" alt="current-image">
+                    @else
+                    <p>No image available</p>
+                    @endif
+                </div>
+
+                <div class="mb-3">
+                    <label for="image" class="form-label">Change Image</label>
+                    <input type="file" class="form-control" name="image">
                 </div>
                 <button type="submit" class="btn btn-primary me-2" id="popup">Submit</button>
-                <a href="{{url('/show-product')}}" class="btn btn-success" role="button">Show product</a>
             </div>
         </form>
 
